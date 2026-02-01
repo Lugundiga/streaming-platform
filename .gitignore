@@ -1,0 +1,294 @@
+# Android Streaming Platform - .gitignore
+# Optimized for Kotlin Android projects
+
+# ============================================
+# Built Application Files
+# ============================================
+*.apk
+*.ap_
+*.aab
+
+# ============================================
+# Files for ART/Dalvik VM
+# ============================================
+*.dex
+
+# ============================================
+# Java Class Files
+# ============================================
+*.class
+
+# ============================================
+# Generated Files
+# ============================================
+bin/
+gen/
+out/
+release/
+
+# ============================================
+# Gradle Files
+# ============================================
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+.gradletasknamecache
+
+# ============================================
+# Local Configuration Files
+# ============================================
+local.properties
+
+# ============================================
+# Android Studio / IntelliJ IDEA
+# ============================================
+*.iml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/jarRepositories.xml
+.idea/caches
+.idea/modules.xml
+.idea/*.iml
+.idea/modules
+.idea/navEditor.xml
+.idea/deploymentTargetDropDown.xml
+
+# Keep these .idea files (useful for collaboration)
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+!.idea/runConfigurations/
+
+# ============================================
+# MacOS
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# ============================================
+# Windows
+# ============================================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ============================================
+# Linux
+# ============================================
+*~
+
+# ============================================
+# Backup Files
+# ============================================
+*.swp
+*.bak
+*~
+*.orig
+
+# ============================================
+# Captures & Logs
+# ============================================
+captures/
+*.log
+
+# ============================================
+# External Native Build
+# ============================================
+.externalNativeBuild
+.cxx/
+
+# ============================================
+# NDK
+# ============================================
+obj/
+
+# ============================================
+# Keystore Files (IMPORTANT - Keep Private!)
+# ============================================
+*.jks
+*.keystore
+key.properties
+keystore.properties
+
+# ============================================
+# Google Services (Contains API Keys)
+# ============================================
+google-services.json
+
+# ============================================
+# Firebase
+# ============================================
+firebase-debug.log
+firebaserc
+
+# ============================================
+# Signing Files (Keep These Private!)
+# ============================================
+signing.properties
+
+# ============================================
+# Proguard
+# ============================================
+proguard/
+mapping.txt
+
+# ============================================
+# Lint
+# ============================================
+lint/generated/
+lint/intermediates/
+lint/outputs/
+lint-results*.xml
+lint-results*.html
+
+# ============================================
+# Version Control
+# ============================================
+.svn/
+.hg/
+.bzr/
+
+# ============================================
+# Temporary Files
+# ============================================
+*.tmp
+*.temp
+
+# ============================================
+# Navigation Editor
+# ============================================
+.navigation/
+
+# ============================================
+# Android Profiling
+# ============================================
+*.hprof
+
+# ============================================
+# Android Studio 3+ Serialized Cache
+# ============================================
+.idea/caches/build_file_checksums.ser
+
+# ============================================
+# Freeline
+# ============================================
+freeline.py
+freeline/
+freeline_project_description.json
+
+# ============================================
+# fastlane (Deployment Tool)
+# ============================================
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/readme.md
+
+# ============================================
+# Fabric (Crashlytics)
+# ============================================
+fabric.properties
+crashlytics.properties
+crashlytics-build.properties
+com_crashlytics_export_strings.xml
+
+# ============================================
+# Test Results
+# ============================================
+test-results/
+test-output/
+*.test
+
+# ============================================
+# Coverage Reports
+# ============================================
+*.exec
+coverage/
+.coverage
+htmlcov/
+
+# ============================================
+# Kotlin
+# ============================================
+.kotlin/
+
+# ============================================
+# Node Modules (if using Node tools)
+# ============================================
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# ============================================
+# Misc
+# ============================================
+.externalToolBuilders/
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# ============================================
+# PROJECT SPECIFIC - Streaming Platform
+# ============================================
+
+# Backend configuration (if included in repo)
+# Uncomment if you have backend in same repo
+# backend/config/db.php
+# backend/vendor/
+
+# Documentation builds (keep source, ignore builds)
+# docs/build/
+
+# Environment files with sensitive data
+.env
+.env.local
+.env.production
+
+# ============================================
+# RECOMMENDED TO KEEP (Comment out if needed)
+# ============================================
+
+# Keep these files for proper project setup
+# !gradle/wrapper/gradle-wrapper.jar
+# !gradle/wrapper/gradle-wrapper.properties
+
+# Keep README files
+!README.md
+!README*.md
+
+# Keep documentation
+!DOCS.md
+!*.pdf
+
+# ============================================
+# END OF .gitignore
+# ============================================
+
+# Note: This .gitignore is comprehensive and covers:
+# - Android Studio files
+# - Gradle build files
+# - Compiled files
+# - Keystore files (security)
+# - API keys (security)
+# - IDE-specific files
+# - OS-specific files
+# - Temporary files
+#
+# Files NOT ignored (will be pushed to Git):
+# - Source code (.kt, .java files)
+# - Layout files (.xml)
+# - Resource files (strings, colors, etc.)
+# - Gradle configuration (build.gradle files)
+# - README and documentation
+# - AndroidManifest.xml
+# - Gradle wrapper files
