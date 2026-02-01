@@ -21,7 +21,6 @@ class ApiHelper(private val context: Context) {
     private var authToken: String? = null
     private val TAG = "ApiHelper"
 
-    // Base URL. Make sure this IP is correct.
     private val baseUrl = "http://192.168.1.164/streaming_platform" 
 
     fun setAuthToken(token: String?) {
@@ -41,65 +40,73 @@ class ApiHelper(private val context: Context) {
                 val data = error.networkResponse.data
                 val responseBody = if (data != null) String(data) else ""
                 Log.e(TAG, "Error $statusCode: $responseBody")
-                "Server Error $statusCode: $responseBody"
+                "Server Error $statusCode"
             }
             error.message != null -> {
                 Log.e(TAG, "Error: ${error.message}")
                 error.message!!
             }
-            else -> {
-                Log.e(TAG, "Unknown Volley Error")
-                "Network error or server unreachable"
-            }
+            else -> "Network error"
         }
         onError(message)
     }
 
     fun login(email: String, password: String, onSuccess: (ApiResponse<Unit>) -> Unit, onError: (String) -> Unit) {
-        // Appending .php if you are using standard PHP files without a router
         val url = "$baseUrl/api/login.php"
-        Log.d(TAG, "Login request to: $url")
+        val jsonBody = JSONObject().apply {
+            put("email", email)
+            put("password", password)
+        }
+
         val request = object : StringRequest(Method.POST, url,
             { response ->
                 Log.d(TAG, "Login response: $response")
                 try {
                     val json = JSONObject(response)
-                    val role = json.optString("role", "user")
-                    val token = json.optString("token", "")
-                    onSuccess(ApiResponse(role = role, token = token))
+                    if (json.has("error")) {
+                        onError(json.getString("error"))
+                    } else {
+                        val role = json.optString("role", "user")
+                        val token = json.optString("token", "")
+                        onSuccess(ApiResponse(role = role, token = token))
+                    }
                 } catch (e: Exception) {
-                    Log.e(TAG, "Login parse error", e)
                     onError("Parsing error")
                 }
             },
             { error -> handleVolleyError(error, onError) }) {
-            override fun getParams(): Map<String, String> {
-                val params = HashMap<String, String>()
-                params["email"] = email
-                params["password"] = password
-                return params
-            }
+            override fun getBodyContentType(): String = "application/json; charset=utf-8"
+            override fun getBody(): ByteArray = jsonBody.toString().toByteArray()
         }
         volleyClient.addToRequestQueue(request)
     }
 
     fun register(username: String, email: String, password: String, onSuccess: (ApiResponse<Unit>) -> Unit, onError: (String) -> Unit) {
-        // Appending .php if you are using standard PHP files without a router
         val url = "$baseUrl/api/register.php"
-        Log.d(TAG, "Register request to: $url")
+        val jsonBody = JSONObject().apply {
+            put("username", username)
+            put("email", email)
+            put("password", password)
+        }
+
         val request = object : StringRequest(Method.POST, url,
             { response ->
                 Log.d(TAG, "Register response: $response")
-                onSuccess(ApiResponse(Unit)) 
+                try {
+                    val json = JSONObject(response)
+                    if (json.has("error")) {
+                        // This handles the "All fields required" or "User already exists" cases
+                        onError(json.getString("error"))
+                    } else {
+                        onSuccess(ApiResponse(Unit))
+                    }
+                } catch (e: Exception) {
+                    onError("Parsing error")
+                }
             },
             { error -> handleVolleyError(error, onError) }) {
-            override fun getParams(): Map<String, String> {
-                val params = HashMap<String, String>()
-                params["username"] = username
-                params["email"] = email
-                params["password"] = password
-                return params
-            }
+            override fun getBodyContentType(): String = "application/json; charset=utf-8"
+            override fun getBody(): ByteArray = jsonBody.toString().toByteArray()
         }
         volleyClient.addToRequestQueue(request)
     }
@@ -123,16 +130,22 @@ class ApiHelper(private val context: Context) {
 
     fun addContent(title: String, description: String, filePath: String, onSuccess: (ApiResponse<Unit>) -> Unit, onError: (String) -> Unit) {
         val url = "$baseUrl/api/add_content.php"
+        val jsonBody = JSONObject().apply {
+            put("title", title)
+            put("description", description)
+            put("file_path", filePath)
+        }
         val request = object : StringRequest(Method.POST, url,
-            { onSuccess(ApiResponse(Unit)) },
+            { response -> 
+                try {
+                    val json = JSONObject(response)
+                    if (json.has("error")) onError(json.getString("error"))
+                    else onSuccess(ApiResponse(Unit))
+                } catch (e: Exception) { onSuccess(ApiResponse(Unit)) }
+            },
             { error -> handleVolleyError(error, onError) }) {
-            override fun getParams(): Map<String, String> {
-                val params = HashMap<String, String>()
-                params["title"] = title
-                params["description"] = description
-                params["file_path"] = filePath
-                return params
-            }
+            override fun getBodyContentType(): String = "application/json; charset=utf-8"
+            override fun getBody(): ByteArray = jsonBody.toString().toByteArray()
             override fun getHeaders(): MutableMap<String, String> = this@ApiHelper.getHeaders()
         }
         volleyClient.addToRequestQueue(request)
@@ -140,16 +153,16 @@ class ApiHelper(private val context: Context) {
 
     fun updateContent(id: Int, title: String, description: String, filePath: String?, onSuccess: (ApiResponse<Unit>) -> Unit, onError: (String) -> Unit) {
         val url = "$baseUrl/api/update_content.php?id=$id"
-        val request = object : StringRequest(Method.POST, url, // Using POST for update often easier with PHP
-            { onSuccess(ApiResponse(Unit)) },
+        val jsonBody = JSONObject().apply {
+            put("title", title)
+            put("description", description)
+            filePath?.let { put("file_path", it) }
+        }
+        val request = object : StringRequest(Method.POST, url,
+            { response -> onSuccess(ApiResponse(Unit)) },
             { error -> handleVolleyError(error, onError) }) {
-            override fun getParams(): Map<String, String> {
-                val params = HashMap<String, String>()
-                params["title"] = title
-                params["description"] = description
-                filePath?.let { params["file_path"] = it }
-                return params
-            }
+            override fun getBodyContentType(): String = "application/json; charset=utf-8"
+            override fun getBody(): ByteArray = jsonBody.toString().toByteArray()
             override fun getHeaders(): MutableMap<String, String> = this@ApiHelper.getHeaders()
         }
         volleyClient.addToRequestQueue(request)
@@ -157,8 +170,8 @@ class ApiHelper(private val context: Context) {
 
     fun deleteContent(id: Int, onSuccess: (ApiResponse<Unit>) -> Unit, onError: (String) -> Unit) {
         val url = "$baseUrl/api/delete_content.php?id=$id"
-        val request = object : StringRequest(Method.GET, url, // Using GET for delete is common in simple scripts
-            { onSuccess(ApiResponse(Unit)) },
+        val request = object : StringRequest(Method.GET, url,
+            { response -> onSuccess(ApiResponse(Unit)) },
             { error -> handleVolleyError(error, onError) }) {
             override fun getHeaders(): MutableMap<String, String> = this@ApiHelper.getHeaders()
         }
