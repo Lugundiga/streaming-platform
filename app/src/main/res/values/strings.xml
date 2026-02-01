@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Streaming Platform</string>
+
+    <!-- Common -->
+    <string name="loading">Loading…</string>
+    <string name="error_occurred">An error occurred</string>
+    <string name="no_internet">No internet connection</string>
+
+    <!-- Auth -->
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="logout">Logout</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="username">Username</string>
+    <string name="dont_have_account">Don\'t have an account? Register</string>
+    <string name="already_have_account">Already have an account? Login</string>
+
+    <!-- Content -->
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="file_path">File Path</string>
+    <string name="add_content">Add Content</string>
+    <string name="edit_content">Edit Content</string>
+    <string name="delete_content">Delete Content</string>
+    <string name="save">Save</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="play_video">Play Video</string>
+
+    <!-- Messages -->
+    <string name="login_successful">Login successful!</string>
+    <string name="registration_successful">Registration successful!</string>
+    <string name="content_added">Content added successfully</string>
+    <string name="content_updated">Content updated successfully</string>
+    <string name="content_deleted">Content deleted successfully</string>
+    <string name="confirm_logout">Are you sure you want to logout?</string>
+    <string name="confirm_delete_content">Are you sure you want to delete this content?</string>
+
+    <!-- Validation -->
+    <string name="field_required">This field is required</string>
+    <string name="invalid_email">Invalid email format</string>
+    <string name="invalid_password">Password must be at least 6 characters</string>
+    <string name="passwords_dont_match">Passwords do not match</string>
+</resources>
