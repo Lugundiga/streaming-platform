@@ -24,6 +24,8 @@ class EditContentActivity : AppCompatActivity() {
         binding = ActivityEditContentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+
         sessionManager = SessionManager(this)
         apiHelper = ApiHelper(this)
 

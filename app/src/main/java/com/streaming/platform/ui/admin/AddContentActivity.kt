@@ -22,6 +22,8 @@ class AddContentActivity : AppCompatActivity() {
         binding = ActivityAddContentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+
         sessionManager = SessionManager(this)
         apiHelper = ApiHelper(this)
 

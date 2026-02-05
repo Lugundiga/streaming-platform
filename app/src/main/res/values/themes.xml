@@ -18,4 +18,8 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="Theme.StreamingPlatform.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.StreamingPlatform.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

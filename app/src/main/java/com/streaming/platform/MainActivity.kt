@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+
         sessionManager = SessionManager(this)
         apiHelper = ApiHelper(this)
 

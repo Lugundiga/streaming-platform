@@ -38,7 +38,8 @@
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.StreamingPlatform.NoActionBar" />
 
         <!-- Content Details Activity -->
         <activity
@@ -49,11 +50,13 @@
         <activity
             android:name=".ui.admin.AddContentActivity"
             android:exported="false"
+            android:theme="@style/Theme.StreamingPlatform.NoActionBar"
             android:parentActivityName=".MainActivity" />
 
         <activity
             android:name=".ui.admin.EditContentActivity"
             android:exported="false"
+            android:theme="@style/Theme.StreamingPlatform.NoActionBar"
             android:parentActivityName=".MainActivity" />
 
         <!-- Video Player Activity -->
