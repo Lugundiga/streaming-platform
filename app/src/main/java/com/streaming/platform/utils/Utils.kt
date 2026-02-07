@@ -2,7 +2,9 @@ package com.streaming.platform.utils
 
 import android.app.AlertDialog
 import android.content.Context
+import android.util.Patterns
 import android.view.View
+import android.webkit.URLUtil
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 
@@ -73,7 +75,7 @@ object Utils {
      * Validate email format
      */
     fun isValidEmail(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     /**
@@ -81,5 +83,15 @@ object Utils {
      */
     fun isValidPassword(password: String): Boolean {
         return password.length >= 6
+    }
+
+    /**
+     * Validate if a string is a valid web URL
+     */
+    fun isValidUrl(url: String?): Boolean {
+        if (url.isNullOrEmpty()) return false
+        
+        return Patterns.WEB_URL.matcher(url).matches() && 
+                (URLUtil.isHttpUrl(url) || URLUtil.isHttpsUrl(url))
     }
 }

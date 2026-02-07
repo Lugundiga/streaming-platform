@@ -33,6 +33,7 @@
         <activity
             android:name=".ui.auth.RegisterActivity"
             android:exported="false"
+            android:theme="@style/Theme.StreamingPlatform.NoActionBar"
             android:parentActivityName=".ui.auth.LoginActivity" />
 
         <!-- Main Activity -->

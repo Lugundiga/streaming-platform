@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.admin.AddContentActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -24,9 +25,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -73,24 +74,29 @@
                     android:gravity="top" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- File Path Input -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilFilePath"
+            <!-- Video Selection -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSelectVideo"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="File Path (URL or server path)"
+                android:text="Select Video from Device"
+                android:layout_marginTop="24dp"
                 app:layout_constraintTop_toBottomOf="@id/tilDescription"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp">
+                app:layout_constraintEnd_toEndOf="parent" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etFilePath"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textUri"
-                    android:maxLines="2" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/tvSelectedFile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="No file selected"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/btnSelectVideo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Buttons -->
             <LinearLayout
@@ -99,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="32dp"
-                app:layout_constraintTop_toBottomOf="@id/tilFilePath"
+                app:layout_constraintTop_toBottomOf="@id/tvSelectedFile"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
@@ -135,4 +141,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

@@ -108,8 +108,7 @@ class MainActivity : AppCompatActivity() {
                     contentAdapter.notifyDataSetChanged()
 
                     // Show empty state if no content
-                    binding.tvEmptyState.visibility =
-                        if (contents.isEmpty()) View.VISIBLE else View.GONE
+                    updateEmptyState(contents.isEmpty())
                 }
             },
             onError = { error ->
@@ -120,6 +119,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+
+    private fun updateEmptyState(isEmpty: Boolean) {
+        binding.tvEmptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
     }
 
     private fun navigateToContentDetail(content: Content) {
@@ -164,7 +167,17 @@ class MainActivity : AppCompatActivity() {
                         Utils.showToast(this, apiResponse.error)
                     } else {
                         Utils.showToast(this, "Content deleted successfully")
-                        loadContent() // Refresh list
+                        
+                        // Find the item index and remove it locally for immediate update
+                        val index = contentList.indexOfFirst { it.id == content.id }
+                        if (index != -1) {
+                            contentList.removeAt(index)
+                            contentAdapter.notifyItemRemoved(index)
+                            updateEmptyState(contentList.isEmpty())
+                        } else {
+                            // Fallback if index not found
+                            loadContent()
+                        }
                     }
                 }
             },

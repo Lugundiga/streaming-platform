@@ -2,6 +2,7 @@ package com.streaming.platform.ui.content
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.streaming.platform.api.ApiHelper
 import com.streaming.platform.databinding.ActivityContentDetailBinding
@@ -43,22 +44,28 @@ class ContentDetailActivity : AppCompatActivity() {
         binding.tvTitle.text = contentTitle
         binding.tvDescription.text = contentDescription.ifEmpty { "No description available" }
         binding.tvFilePath.text = "File: $contentFilePath"
+        
+        Log.d("ContentDetail", "Loaded Content ID: $contentId, File Path: $contentFilePath")
     }
 
     private fun setupListeners() {
         binding.btnPlayVideo.setOnClickListener {
+            // Log exactly what we have before starting activity
+            Log.d("ContentDetail", "Play button clicked. current contentFilePath: '$contentFilePath'")
+
+            if (contentFilePath.isEmpty()) {
+                Log.e("ContentDetail", "Cannot play: contentFilePath is empty!")
+                return@setOnClickListener
+            }
+
             // Navigate to video player
             val intent = Intent(this, VideoPlayerActivity::class.java)
-            intent.putExtra("content_id", contentId)
+            intent.putExtra("VIDEO_URL", contentFilePath)
             intent.putExtra("content_title", contentTitle)
-            intent.putExtra("video_url", getVideoUrl())
+            
+            Log.d("ContentDetail", "Starting VideoPlayerActivity with URL: $contentFilePath")
             startActivity(intent)
         }
-    }
-
-    private fun getVideoUrl(): String {
-        // Get the streaming URL from ApiHelper
-        return apiHelper.getStreamUrl(contentId)
     }
 
     override fun onSupportNavigateUp(): Boolean {
